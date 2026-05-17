@@ -8,11 +8,13 @@ export const getAllNotes = async (req, res) => {
   const notesQuery = Note.find();
 
   if (search) {
-    notesQuery.where({
-      title: { $regex: search, $options: "i" },
-      content: { $regex: search, $options: "i"}
-	});
-  }
+  notesQuery.where({
+    $or: [
+      { title: { $regex: search, $options: "i" } },
+      { content: { $regex: search, $options: "i" } }
+    ]
+  });
+}
 
   if (tag) {
     notesQuery.where("tag").equals(tag);
