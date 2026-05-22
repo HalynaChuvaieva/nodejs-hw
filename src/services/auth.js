@@ -6,7 +6,7 @@ export async function createSession(userId) {
   const accessToken = crypto.randomUUID();
   const refreshToken = crypto.randomUUID();
 
-  const session = Session.create({
+  const session = await Session.create({
     userId: userId,
     accessToken,
     refreshToken,

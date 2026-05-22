@@ -14,7 +14,7 @@ export const registerUser = async (req, res) => {
 
   const hashedPassword = await bcrypt.hash(password, 10);
 
-  const newUser = User.create({
+  const newUser = await User.create({
     email,
     password: hashedPassword,
   });
@@ -93,12 +93,12 @@ export const logoutUser = async (req, res) => {
   const { sessionId } = req.cookies;
 
   if (sessionId) {
-    Session.deleteOne({ _id: sessionId });
+    await Session.deleteOne({ _id: sessionId });
 
     res.clearCookie('accessToken');
     res.clearCookie('refreshToken');
     res.clearCookie('sessionId');
-
-    res.status(204).send();
   }
+
+  res.status(204).send();
 };
